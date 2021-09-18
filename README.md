@@ -1,6 +1,7 @@
 # TodoApp-djangoAPI
-##How to build your first API in Django
-#django #webdev
+
+# How to build your first API in Django
+
 
 
 We often hear about how APIs are all the time. They can be very confusing when trying to understand how APIs work. In this article, We will create our API using Python/Django. Every program or piece of software uses REST APIs to connect the backend and frontend components. Let's get started with it.
@@ -68,13 +69,13 @@ INSTALLED_APPS = [
     'todoapp',
 ]
 
-Creating the Todo model
+## Creating the Todo model
 
 Models in Django are Python classes that represent a database table. When we run the command python manage.py migrate, Django creates a Todo table in the database, which we can see in the Todo Model.
 We'll create our Todo model in the models.py file of the todo app using the following code:
 
 from django.db import models
-# Create your models here.
+#Create your models here.
 class Todo(models.Model):
     title = models.CharField(max_length = 100)
     body = models.CharField(max_length = 100)
@@ -93,7 +94,7 @@ To apply the migrations run
 
 python manage.py migrate
 
-Serializing the Todo model
+## Serializing the Todo model
 
 Let's subclass the Django rest framework's Serializer.ModelSerializer class to make it easier to transform Python objects retrieved from the database to the JSON format required by our APIs and back to Python objects that can be mapped to our database tables.
 In the todo app directory, create a file serializers.py, where we will write our TodoSerializer code.
@@ -105,7 +106,7 @@ class TodoSerializer(serializers.ModelSerializer):
         model = Todo
         fields = "__all__"
 
-Creating the TodoAPIView
+## Creating the TodoAPIView
 
 We'll build the code for our app's CRUD capabilities in the views.py file in our todo app directory. The Django Rest Framework has built-in classes that make creating CRUD functionality a breeze.
 
@@ -118,7 +119,7 @@ from rest_framework.generics import DestroyAPIView
 from rest_framework.generics import UpdateAPIView
 from todo.serializers import TodoSerializer
 from todo.models import Todo
-# Create your views here.
+#Create your views here.
 class ListTodoAPIView(ListAPIView):
     """This endpoint list all of the available todos from the database"""
     queryset = Todo.objects.all()
@@ -136,7 +137,7 @@ class DeleteTodoAPIView(DestroyAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
 
-Creating URL paths for our Todo endpoints
+## Creating URL paths for our Todo endpoints
 
 We may connect with the various Todo crud views using the URLs. Create a file urls.py in the todo app directory where we will write URLs for various endpoints.
 
@@ -149,7 +150,7 @@ urlpatterns = [
     path("delete/<int:pk>/",views.DeleteTodoAPIView.as_view(),name="delete_todo")
 ]
 
-Testing the endpoints
+## Testing the endpoints
 
 Let's make sure our development server is up and running before we test our API endpoints. Run the command python manage.py runserver in the root folder of our project, where the manage.py file exists, to start the development server.
 
@@ -163,7 +164,7 @@ http://localhost:8000/api/v1/todo/create/ with the new Todo object.
     "is_completed": true
 }
 
-Conclusion
+## Conclusion
 
 In Django, we now know how to define and document restful endpoint APIs.
 
